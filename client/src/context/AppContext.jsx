@@ -51,11 +51,10 @@ const AppContextProvider = (props) => {
       const token = await getToken();
 
       const formData = new FormData();
-      formData.append('image_file', image);
-      formData.append('clerkId', user.id); 
+      image && formData.append('image_file', image);
 
       const { data } = await axios.post(
-        backendUrl +"/api/image/remove-bg",
+        backendUrl +'/api/image/remove-bg',
         formData,
         { headers: { token }, }
       );
