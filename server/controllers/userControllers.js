@@ -28,6 +28,7 @@ const clerkWebhooks = async (req,res)=>{
                     photo: data.image_url
                 }
 
+
                 await userModel.create(userData)
                 res.json({})
             
@@ -52,7 +53,7 @@ const clerkWebhooks = async (req,res)=>{
 
             case "user.deleted":{
 
-                await userModel.findOneAndUpdate({clerkId:data.id})
+                await userModel.findOneAndDelete({clerkId:data.id})
                 res.json({})
             
                  break;
@@ -73,4 +74,31 @@ const clerkWebhooks = async (req,res)=>{
     }
 }
 
-export {clerkWebhooks}
+
+
+
+// API controller function to get user available credits data
+
+
+const userCredits = async (req, res) => {
+  try {
+    const { clerkId } = req.body;
+
+    if (!clerkId) {
+      return res.status(400).json({ success: false, message: "clerkId is required" });
+    }
+
+    const userData = await userModel.findOne({ clerkId });
+
+    if (!userData) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    res.json({ success: true, credits: userData.creditBalance });
+  } catch (error) {
+    console.error("Error fetching user credits:", error.message);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+};
+
+export {clerkWebhooks ,userCredits}
