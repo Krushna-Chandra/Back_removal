@@ -6,7 +6,7 @@ const userSchema = new mongoose.Schema({
   photo: { type: String, required: true },
   firstName: { type: String },
   lastName: { type: String },
-  creditBalance: { type: Number, default: 5 },
+  creditBalance: { type: Number, default: 8 },
 });
 
 // Avoid model overwrite error in development
