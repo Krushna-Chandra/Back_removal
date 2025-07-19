@@ -1,3 +1,4 @@
+import React from "react";
 import { useAuth, useUser, useClerk } from "@clerk/clerk-react";
 import { useState } from "react";
 import { createContext } from "react";
@@ -5,7 +6,8 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
-export const AppContext = createContext();
+export const AppContext = createContext(null);
+
 
 const AppContextProvider = (props) => {
   const [credit, setCredit] = useState(false);
@@ -16,7 +18,7 @@ const AppContextProvider = (props) => {
   const navigate = useNavigate();
 
   const { getToken } = useAuth();
-  const { isSignedIn } = useUser();
+  const { isSignedIn ,user} = useUser();
   const { openSignIn } = useClerk();
 
   const loadCreditsData = async () => {
@@ -49,12 +51,13 @@ const AppContextProvider = (props) => {
       const token = await getToken();
 
       const formData = new FormData();
-      image && formData.append('image', image);
+      formData.append('image_file', image);
+      formData.append('clerkId', user.id); 
 
       const { data } = await axios.post(
         backendUrl +"/api/image/remove-bg",
         formData,
-        { headers: { token } }
+        { headers: { token }, }
       );
 
       if (data.success) {
@@ -86,7 +89,9 @@ const AppContextProvider = (props) => {
   };
 
   return (
-    <AppContext.Provider value={value}>{props.children}</AppContext.Provider>
+    <AppContext.Provider value={value}>
+        {props.children}
+        </AppContext.Provider>
   );
 };
 
