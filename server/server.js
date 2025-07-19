@@ -3,7 +3,7 @@ import express from 'express'
 import cors from 'cors'
 import connectDB from "./configs/mongodb.js"
 import userRouter from "./routes/userRouters.js"
-import imageRouter from "./routes/imageRoutes.js"
+import imageRouter from "./routes/imageRouters.js"
 
 // App Config
 const PORT = process.env.PORT || 4000
