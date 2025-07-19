@@ -6,6 +6,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
+
 export const AppContext = createContext(null);
 
 
@@ -18,7 +19,7 @@ const AppContextProvider = (props) => {
   const navigate = useNavigate();
 
   const { getToken } = useAuth();
-  const { isSignedIn ,user} = useUser();
+  const { isSignedIn } = useUser();
   const { openSignIn } = useClerk();
 
   const loadCreditsData = async () => {
