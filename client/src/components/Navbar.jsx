@@ -11,7 +11,8 @@ const Navbar = () => {
   const { isSignedIn, user } = useUser();
   const { credit , loadCreditsData} = useContext(AppContext)
 
-  const navigate = useNavigate
+  const navigate = useNavigate();
+
 
 
   useEffect(()=>{
